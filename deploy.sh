@@ -12,8 +12,8 @@ DOMAIN_NAME="your-domain.com"
 az group create --name $RESOURCE_GROUP --location $LOCATION
 
 # Generate SSH key if it doesn't exist
-if [ ! -f ~/.ssh/id_rsa ]; then
-    ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
+if [ ! -f ~/.ssh/id_rsa_n8n ]; then
+    ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa_n8n
 fi
 
 # Deploy the VM
@@ -23,7 +23,7 @@ az deployment group create \
   --parameters \
     vmName=$VM_NAME \
     adminUsername=$ADMIN_USERNAME \
-    adminPasswordOrKey="$(cat ~/.ssh/id_rsa.pub)" \
+    adminPasswordOrKey="$(cat ~/.ssh/id_rsa_n8n.pub)" \
     dnsLabelPrefix=$DNS_PREFIX \
     n8nDomain=$DOMAIN_NAME
 
