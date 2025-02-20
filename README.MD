@@ -102,13 +102,13 @@ Point your domain to the VM's IP address (shown in deployment output)
 
 1. SSH into the VM:
 ```bash
-ssh n8nadmin@<VM_IP>
+ssh -i ~/.ssh/id_rsa_n8n n8nadmin@<VM_IP>
 ```
 
-2. Copy setup files:
+2. Open new Terminal and Copy setup files:
 ```bash
 # From your local machine
-scp setup.sh docker-compose.yml backup.sh n8nadmin@<VM_IP>:~/
+scp -i ~/.ssh/id_rsa_n8n setup.sh docker-compose.yml backup.sh n8nadmin@<VM_IP>:~/
 ```
 
 3. Run setup:
@@ -124,9 +124,7 @@ Once deployment is complete, you can access n8n at:
 https://your-domain.com
 ```
 
-Default credentials:
-- Username: admin
-- Password: (Set during deployment)
+Set your own credentials at the first login.
 
 ## Configuration Files
 
@@ -139,18 +137,30 @@ Key configurations:
 ```yaml
 services:
   n8n:
-    image: docker.io/n8nio/n8n
+    image: docker.io/n8nio/n8n:latest
     ports:
       - "5678:5678"
     environment:
-      - N8N_BASIC_AUTH_ACTIVE=true
-      # ... other env vars
+      - N8N_HOST=${N8N_HOST}
+      - WEBHOOK_URL=https://${N8N_HOST}
+      - NODE_ENV=production
+      - N8N_PROTOCOL=https
+      - N8N_SSL_CERT=/etc/caddy/certificates/${N8N_HOST}.crt
+      - N8N_PORT=5678
+      - GENERIC_TIMEZONE=UTC
+    volumes:
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres:14-alpine
     environment:
       - POSTGRES_USER=n8n
-      # ... other env vars
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=n8n
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 ```
 
 ### Backup Configuration
@@ -203,15 +213,13 @@ Manual backup:
 
 1. Firewall rules are configured to allow only:
    - SSH (22)
-   - HTTP (80)
    - HTTPS (443)
 
 2. SSH access:
-   - Key-based authentication only
+   - SSH Key-based authentication only
    - Password authentication disabled
 
 3. n8n security:
-   - Basic authentication enabled
    - HTTPS enforced
    - Regular security updates
 

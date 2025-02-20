@@ -2,14 +2,11 @@ version: '3.8'
 
 services:
   n8n:
-    image: docker.io/n8nio/n8n
+    image: docker.io/n8nio/n8n:latest
     restart: always
     ports:
       - "5678:5678"
     environment:
-      - N8N_BASIC_AUTH_ACTIVE=true
-      - N8N_BASIC_AUTH_USER=admin
-      - N8N_BASIC_AUTH_PASSWORD=password
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=postgres
       - DB_POSTGRESDB_DATABASE=n8n
@@ -18,6 +15,10 @@ services:
       - N8N_HOST=${N8N_HOST}
       - WEBHOOK_URL=https://${N8N_HOST}
       - NODE_ENV=production
+      - N8N_PROTOCOL=https
+      - N8N_SSL_CERT=/etc/caddy/certificates/${N8N_HOST}.crt
+      - N8N_PORT=5678
+      - GENERIC_TIMEZONE=UTC
     volumes:
       - n8n_data:/home/node/.n8n
     depends_on:

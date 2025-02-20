@@ -5,8 +5,8 @@ RESOURCE_GROUP="n8n-rg"
 LOCATION="eastus"
 VM_NAME="n8n-vm"
 ADMIN_USERNAME="n8nadmin"
-DNS_PREFIX="n8n-$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 5 | head -n 1)"
-DOMAIN_NAME="your-domain.com"
+DNS_PREFIX="n8n-$(date +%s | cut -c6-10)"
+DOMAIN_NAME="n8n.prismantis.com"
 
 # Create resource group
 az group create --name $RESOURCE_GROUP --location $LOCATION
