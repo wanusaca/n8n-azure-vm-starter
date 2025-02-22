@@ -27,12 +27,6 @@
                 "description": "DNS Label for the Public IP"
             }
         },
-        "n8nDomain": {
-            "type": "string",
-            "metadata": {
-                "description": "Domain name for n8n instance"
-            }
-        },
         "authenticationType": {
             "type": "string",
             "defaultValue": "sshPublicKey",
@@ -66,7 +60,7 @@
                 "name": "Basic"
             },
             "properties": {
-                "publicIPAllocationMethod": "Static",
+                "publicIPAllocationMethod": "Dynamic",
                 "dnsSettings": {
                     "domainNameLabel": "[parameters('dnsLabelPrefix')]"
                 }

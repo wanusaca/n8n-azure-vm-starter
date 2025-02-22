@@ -78,7 +78,6 @@ RESOURCE_GROUP="n8n-rg"
 LOCATION="eastus"
 VM_NAME="n8n-vm"
 ADMIN_USERNAME="n8nadmin"
-DOMAIN_NAME="your-domain.com"  # Replace with your domain
 ```
 
 ### 3. Deploy the VM
@@ -93,10 +92,15 @@ The script will:
 - Generate SSH keys if needed
 - Deploy the VM using ARM template
 - Output connection information
+- The VM public IP is Dynamic, so you need to use Azure DNS record to point to your domain.
 
 ### 4. Configure DNS
 
-Point your domain to the VM's IP address (shown in deployment output)
+Point your domain to the VM's DNS Name (shown in deployment output). We cannot use IP address because it is dynamic and will change when the VM is restarted. Additionally, we are using Caddy as a reverse proxy to automatically handle HTTPS. 
+
+Make sure to create `CNAME` record for `n8n.example.com` to point to the VM's DNS Name (found in deployment output) on your Domain Registrar.
+
+We need the DNS configured before we setup n8n server because Caddy will use the DNS to get the SSL certificate from Let's Encrypt and if its not ready then SSL will not generate & will throw an error, because Caddy will not be able to get the SSL certificate since it will not find the DNS record. I will recommend to wait for 10-15 minutes after you have pointed your subdomain to Azure VM DNS Name, before we setup n8n server.
 
 ### 5. Setup n8n
 
@@ -110,6 +114,7 @@ ssh -i ~/.ssh/id_rsa_n8n n8nadmin@<VM_IP>
 # From your local machine
 scp -i ~/.ssh/id_rsa_n8n setup.sh docker-compose.yml backup.sh n8nadmin@<VM_IP>:~/
 ```
+- It will copy all the files to the VM.
 
 3. Run setup:
 ```bash
@@ -117,11 +122,20 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-### 6. Access n8n
+It will ask for domain name, Please provide your domain name. I prefer to use subdomain like `n8n.yourdomain.com`.
+
+### 7. Navigate to n8n folder and start containers
+```bash
+cd n8n
+docker-compose up -d
+```
+- we are using volume to persist n8n data to make sure data is not lost when containers are restarted.
+
+### 8. Access n8n
 
 Once deployment is complete, you can access n8n at:
 ```
-https://your-domain.com
+https://n8n.your-domain.com
 ```
 
 Set your own credentials at the first login.
@@ -212,11 +226,11 @@ Manual backup:
 ## Security Considerations
 
 1. Firewall rules are configured to allow only:
-   - SSH (22)
+   - SSH (22) Please make sure to disable SSH port 22 in Azure portal.
    - HTTPS (443)
 
 2. SSH access:
-   - SSH Key-based authentication only
+   - SSH Key-based authentication only and is stored at `~/.ssh/id_rsa_n8n` on your local machine.
    - Password authentication disabled
 
 3. n8n security:
