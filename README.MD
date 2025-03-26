@@ -66,8 +66,8 @@ az login
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/jawand/n8n-azure-deploy
-cd n8n-azure-deploy
+git clone https://github.com/jawand/n8n-azure-vm-starter
+cd n8n-azure-vm-starter
 ```
 
 ### 2. Configure Deployment
