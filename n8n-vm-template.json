@@ -56,11 +56,12 @@
             "apiVersion": "2021-02-01",
             "name": "[variables('publicIPAddressName')]",
             "location": "[resourceGroup().location]",
+            "zones": ["2"],
             "sku": {
-                "name": "Basic"
+                "name": "Standard"
             },
             "properties": {
-                "publicIPAllocationMethod": "Dynamic",
+                "publicIPAllocationMethod": "Static",
                 "dnsSettings": {
                     "domainNameLabel": "[parameters('dnsLabelPrefix')]"
                 }
@@ -158,6 +159,7 @@
             "apiVersion": "2021-03-01",
             "name": "[parameters('vmName')]",
             "location": "[resourceGroup().location]",
+            "zones": ["2"],
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
             ],
@@ -210,4 +212,4 @@
             "value": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
         }
     }
-} 
+}
