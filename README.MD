@@ -30,7 +30,7 @@ The deployment consists of:
 - Ubuntu 24.04 LTS
 - Docker CE with Compose plugin
 - n8n Community Edition
-- PostgreSQL database
+- PostgreSQL 16 database
 - Caddy web server (for automatic HTTPS with Let's Encrypt)
 - Automated backup scripts
 - Basic system monitoring
