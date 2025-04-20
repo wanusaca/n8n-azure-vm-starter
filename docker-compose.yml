@@ -24,7 +24,7 @@ services:
       - postgres
 
   postgres:
-    image: postgres:14-alpine
+    image: postgres:16-alpine  # Updated from 14 to 16
     restart: always
     environment:
       - POSTGRES_USER=n8n
