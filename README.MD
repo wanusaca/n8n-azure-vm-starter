@@ -26,14 +26,14 @@ This repository contains templates and scripts to deploy n8n workflow automation
 ## Overview
 
 The deployment consists of:
-- Azure B1ms VM (1 vCPU, 2GB RAM)
-- Ubuntu 22.04 LTS
-- Docker & Docker Compose
+- Azure B2pts_v2 VM (2 vCPUs, 1GB RAM) - ARM-based architecture
+- Ubuntu 24.04 LTS
+- Docker CE with Compose plugin
 - n8n Community Edition
 - PostgreSQL database
-- Caddy web server (for HTTPS)
-- Automatic backups
-- Basic monitoring
+- Caddy web server (for automatic HTTPS with Let's Encrypt)
+- Automated backup scripts
+- Basic system monitoring
 
 ## Prerequisites
 
