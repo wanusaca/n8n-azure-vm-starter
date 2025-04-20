@@ -13,7 +13,7 @@ Deploy n8n like a boss on Azure! This repo helps you set up n8n faster than you 
 Because manually setting up n8n on Azure is about as fun as debugging production at 3 AM. This template does all the boring stuff for you, so you can focus on building awesome workflows instead.
 
 ## Cost? 💰
-About $15/month - cheaper than your coffee addiction! ☕
+About $5/month - cheaper than your coffee addiction! ☕
 
 _Perfect for: People who love automation but hate complicated setups. Not perfect for: People who enjoy spending weekends configuring servers (you know who you are)._
 
