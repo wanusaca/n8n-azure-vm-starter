@@ -2,7 +2,7 @@
 
 # Variables
 RESOURCE_GROUP="n8n-rg"
-LOCATION="eastus"
+LOCATION="canadacentral"
 VM_NAME="n8n-vm"
 ADMIN_USERNAME="n8nadmin"
 DNS_PREFIX="n8n-$(date +%s | cut -c6-10)"
