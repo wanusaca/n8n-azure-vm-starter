@@ -17,7 +17,7 @@ services:
       - N8N_PROTOCOL=https
       - N8N_SSL_CERT=/etc/caddy/certificates/${N8N_HOST}.crt
       - N8N_PORT=5678
-      - GENERIC_TIMEZONE=UTC
+      - GENERIC_TIMEZONE=America/Edmonton
     volumes:
       - n8n_data:/home/node/.n8n
     depends_on:
