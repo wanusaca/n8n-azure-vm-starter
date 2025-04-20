@@ -40,10 +40,10 @@
         }
     },
     "variables": {
-        "vmSize": "Standard_B1ms",
+        "vmSize": "Standard_B2pts_v2",
         "imagePublisher": "Canonical",
-        "imageOffer": "0001-com-ubuntu-server-jammy",
-        "imageSku": "22_04-lts",
+        "imageOffer": "0001-com-ubuntu-server-noble",
+        "imageSku": "24_04-lts",
         "networkSecurityGroupName": "[concat(parameters('vmName'), '-nsg')]",
         "publicIPAddressName": "[concat(parameters('vmName'), '-ip')]",
         "virtualNetworkName": "[concat(parameters('vmName'), '-vnet')]",
