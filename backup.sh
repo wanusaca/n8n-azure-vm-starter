@@ -40,6 +40,10 @@ else
     exit 1
 fi
 
+# Backup .env file
+cp /home/$USER/n8n/.env ${BACKUP_DIR}/env_backup_${DATE}.env
+echo "Environment file backed up: ${BACKUP_DIR}/env_backup_${DATE}.env"
+
 # Only attempt Azure upload if storage variables are set
 if [ ! -z "${AZURE_STORAGE_ACCOUNT}" ] && [ ! -z "${AZURE_CONTAINER_NAME}" ]; then
     az storage blob upload \
@@ -60,5 +64,6 @@ fi
 # Optional: Clean up old backups (keep only last 7 days)
 find ${BACKUP_DIR} -name "backup_*.sql" -mtime +7 -delete
 find ${BACKUP_DIR} -name "n8n_data_*.tar.gz" -mtime +7 -delete
+find ${BACKUP_DIR} -name "env_backup_*.env" -mtime +7 -delete
 
 echo "Backup process completed"
