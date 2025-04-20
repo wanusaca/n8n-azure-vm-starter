@@ -77,12 +77,16 @@ sudo systemctl status caddy
 # Create n8n directory and set environment variables
 mkdir -p n8n && mv docker-compose.yml n8n && cd n8n
 
+# Generate a secure random password
+DB_PASSWORD=$(openssl rand -base64 32)
+
 # Set N8N_HOST environment variable both in .env and current session
 export N8N_HOST="${domain_name}"
 echo "N8N_HOST=${domain_name}" > .env
 echo "N8N_PROTOCOL=https" >> .env
 echo "N8N_PORT=5678" >> .env
+echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
 
 # Notify user to log out and back in
 echo "Setup complete! Please log out and log back in for docker permissions to take effect."
-echo "Then run 'docker-compose up -d' in the n8n directory to start the containers." 
+echo "Then run 'docker-compose up -d' in the n8n directory to start the containers."
