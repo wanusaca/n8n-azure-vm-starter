@@ -19,6 +19,9 @@ echo \
 sudo apt update
 sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
+# Create symlink for legacy docker-compose command
+sudo ln -s /usr/libexec/docker/cli-plugins/docker-compose /usr/bin/docker-compose
+
 # Add current user to docker group to avoid permission issues
 sudo usermod -aG docker $USER
 # Notify about group changes
